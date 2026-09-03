@@ -1,0 +1,20 @@
+{
+  "pages": ["pages/index/index", "pages/login/index"],
+  "subpackages": [
+    {
+      "root": "packages",
+      "pages": ["logs/logs"]
+    }
+  ],
+  "usingComponents": {
+    "van-button": "@vant/weapp/button/index",
+    "svg-icon": "./components/svg-icon/index"
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "Weapp-starter",
+    "navigationBarTextStyle": "black"
+  },
+  "sitemapLocation": "sitemap.json"
+}

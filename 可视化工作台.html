@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>可视化工作台 · AI 协作体系</title>
+  <meta name="description" content="AI 协作体系可视化工作台：总览分层树、使用流程、快速使用（纯静态，本地离线可用）。">
+  <link rel="stylesheet" href="工具/可视化工作台/css/theme-dark.css">
+  <link rel="stylesheet" href="工具/可视化工作台/css/style.css">
+</head>
+<body>
+  <!-- 背景氛围层（6.7：光晕 + 细网格 + 轻粒子，静态光斑兜底） -->
+  <div id="bg-layer" aria-hidden="true">
+    <div class="bg-blob bg-blob--cyan breathe"></div>
+    <div class="bg-blob bg-blob--violet breathe"></div>
+    <canvas id="bg-particles"></canvas>
+  </div>
+
+  <!-- 全局骨架：左侧固定菜单 + 右内容区 + 全局页脚固定（UX 2.1 固定框架+局部滚动） -->
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand__logo" aria-hidden="true">协</div>
+        <div>
+          <div class="brand__name">AI 协作体系</div>
+          <div class="brand__sub">可视化工作台</div>
+        </div>
+      </div>
+      <nav class="menu" id="menu" aria-label="主导航">
+        <button class="menu__item is-active" type="button" data-view="overview" aria-current="page">
+          <span class="menu__icon" aria-hidden="true">◉</span>总览
+        </button>
+        <button class="menu__item" type="button" data-view="flow">
+          <span class="menu__icon" aria-hidden="true">⇶</span>使用流程树
+        </button>
+        <button class="menu__item" type="button" data-view="quickstart">
+          <span class="menu__icon" aria-hidden="true">⚡</span>快速使用
+        </button>
+      </nav>
+      <div class="sidebar__foot">纯静态页面 · 本地离线可用</div>
+    </aside>
+
+    <main class="content">
+      <div class="content__scroll" id="content-scroll">
+        <!-- 视图 1：总览（左→右分层树，固定视口 + 拖拽） -->
+        <section class="view active" id="view-overview" aria-label="总览"></section>
+
+        <!-- 视图 2：使用流程树 -->
+        <section class="view" id="view-flow" aria-label="使用流程树"></section>
+
+        <!-- 视图 3：快速使用 -->
+        <section class="view" id="view-quickstart" aria-label="快速使用"></section>
+      </div>
+
+      <footer class="global-footer">
+        <span class="updated" id="footer-updated">数据最后更新时间：加载中…</span>
+        <span class="footer-hint">数据过期时，双击「人工维护\可视化工作台更新数据.bat」即可刷新</span>
+      </footer>
+    </main>
+  </div>
+
+  <noscript>
+    <div style="position:fixed;inset:0;z-index:99;background:#060a14;color:#eaf2ff;display:flex;align-items:center;justify-content:center;font-family:Segoe UI,Microsoft YaHei,sans-serif;">
+      可视化工作台需要启用 JavaScript 才能正常显示，请在浏览器设置中开启后刷新。
+    </div>
+  </noscript>
+
+  <!-- 依赖与脚本（普通 script 标签，file:// 下无 CORS 限制；data.js 禁 fetch）
+       可视化工作台.html 位于体系根；全部资产位于 工具\可视化工作台\ 下 -->
+  <script src="工具/可视化工作台/lib/echarts.min.js"></script>
+  <script src="工具/可视化工作台/js/core.js"></script>
+  <script src="工具/可视化工作台/data-static.js"></script>
+  <script src="工具/可视化工作台/data.js"></script>
+  <script src="工具/可视化工作台/js/overview.js"></script>
+  <script src="工具/可视化工作台/js/flow.js"></script>
+  <script src="工具/可视化工作台/js/quickstart.js"></script>
+  <script>
+    // 启动（视图注册已在各 js 内完成）
+    if (window.VWB) { window.VWB.boot(); }
+  </script>
+</body>
+</html>

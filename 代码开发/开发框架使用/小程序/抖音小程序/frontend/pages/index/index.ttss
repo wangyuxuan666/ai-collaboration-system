@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 200rpx;
+}
+.welcome {
+  font-size: 44rpx;
+  margin-bottom: 40rpx;
+}
+.info {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 80rpx;
+}

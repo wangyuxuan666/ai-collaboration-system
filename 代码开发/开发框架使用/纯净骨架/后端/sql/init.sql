@@ -1,0 +1,11 @@
+-- 纯净骨架示例表（演示用）
+-- 业务表统一前缀：模块名_表名，如 demo_item
+
+CREATE TABLE IF NOT EXISTS demo_item (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '主键',
+    name VARCHAR(128) NOT NULL COMMENT '名称',
+    status TINYINT DEFAULT 1 COMMENT '状态：0 停用 1 启用',
+    deleted TINYINT DEFAULT 0 COMMENT '逻辑删除：0 未删 1 已删',
+    create_time DATETIME DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    update_time DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COMMENT ='示例表';

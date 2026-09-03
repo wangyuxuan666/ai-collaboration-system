@@ -1,0 +1,6 @@
+<view class="container">
+  <view class="welcome">抖音小程序骨架</view>
+  <view tt:if="{{loggedIn}}" class="info">已登录：{{username}}</view>
+  <view tt:else class="info">未登录</view>
+  <button type="primary" bindtap="goLogin">去登录</button>
+</view>

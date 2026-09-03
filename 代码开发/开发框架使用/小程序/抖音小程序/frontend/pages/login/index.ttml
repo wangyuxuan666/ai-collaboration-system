@@ -1,0 +1,4 @@
+<view class="container">
+  <view class="title">抖音小程序骨架</view>
+  <button type="primary" bindtap="doLogin">一键登录</button>
+</view>

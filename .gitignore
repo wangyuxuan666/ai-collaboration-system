@@ -1,0 +1,49 @@
+# ===== 私人内容与本机状态 =====
+自成长/agentbrain/
+知识库/raw/
+知识库/Wiki/**/知识/
+知识库/收集箱/已处理/
+.obsidian/
+.lrnev/
+**/project.private.config.json
+
+# ===== 不随仓库分发的第三方工具 =====
+工具/MCP/gitee/
+工具/skills/UIUXProMax/
+工具/skills/代码开发协作工具/Understand-Anything/
+
+# ===== 文档与生成数据 =====
+代码开发/开发框架使用/若依Plus全配/官方文档/
+工具/可视化工作台/data.js
+工具/可视化工作台/data.js.bak
+工具/可视化工作台/data.js.tmp
+工具/可视化工作台/data-static.js
+
+# ===== 依赖、构建产物与运行缓存 =====
+node_modules/
+target/
+dist/
+build/
+out/
+.deps/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+coverage/
+*.pyc
+*.pyd
+*.class
+
+# ===== 环境文件：默认不上传；框架模板目录统一放行 =====
+**/.env
+**/.env.*
+!.env.example
+!代码开发/开发框架使用/**/.env
+!代码开发/开发框架使用/**/.env.*
+
+# ===== 本机生成文件 =====
+*.log
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db

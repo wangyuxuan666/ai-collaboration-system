@@ -1,0 +1,220 @@
+/* ============================================================
+   可视化工作台 · 深色霓虹主题（theme-dark.css）
+   依据《UX方案与设计契约》6.2 色板 / 6.3 字体 / 6.4 圆角边框 / 6.5 发光分级 / 6.6 动效 / 6.7 背景
+   方案 A「霓虹深蓝」：深蓝黑底 + 青紫双霓虹 + 大屏光晕 + 细网格 + 轻粒子
+   硬约束：全站节点文字不用斜体（正常字重 + 霓虹强调色表达主次）
+   ============================================================ */
+
+:root {
+  /* ---- 6.2 色板（定稿值） ---- */
+  --bg-0: #060a14;              /* 页面基座（深蓝黑） */
+  --bg-1: #0a1020;              /* 内容区分区/面板 */
+  --bg-2: #101a30;              /* 卡片 */
+  --bg-3: #182442;              /* hover 提升/浮层 */
+
+  --line-1: rgba(34, 211, 238, 0.16);   /* 面板描边（青） */
+  --line-2: rgba(148, 163, 184, 0.20);  /* 分隔线 */
+
+  --text-0: #eaf2ff;            /* 主文字 */
+  --text-1: #9db2d8;            /* 次文字 */
+  --text-2: #5d7298;            /* 弱文字/辅助 */
+
+  --accent-cyan: #22d3ee;       /* 主霓虹色（青） */
+  --accent-violet: #a78bfa;     /* 次霓虹色（紫：判断点/挂件/工具徽标） */
+
+  --ok: #34d399;
+  --warn: #fbbf24;
+  --danger: #f87171;
+
+  /* ---- 6.4 圆角 ---- */
+  --r-lg: 17px;
+  --r-md: 13px;
+  --r-sm: 9px;
+
+  /* ---- 6.5 发光分级 ---- */
+  --text-glow-cyan:   0 0 5px rgba(34, 211, 238, 0.85), 0 0 16px rgba(34, 211, 238, 0.35);
+  --text-glow-violet: 0 0 5px rgba(167, 139, 250, 0.85), 0 0 16px rgba(167, 139, 250, 0.35);
+  --text-glow-soft:   0 0 4px rgba(34, 211, 238, 0.45), 0 0 9px rgba(34, 211, 238, 0.18);
+  --box-glow-1: 0 0 4px rgba(34, 211, 238, 0.9), 0 0 14px rgba(34, 211, 238, 0.5), 0 0 26px rgba(34, 211, 238, 0.25);
+  --box-glow-2: 0 0 3px rgba(34, 211, 238, 0.7), 0 0 10px rgba(34, 211, 238, 0.32);
+  --box-glow-2v: 0 0 3px rgba(167, 139, 250, 0.7), 0 0 10px rgba(167, 139, 250, 0.32);
+  --box-glow-3: 0 1px 2px rgba(0, 0, 0, 0.4), 0 0 6px rgba(34, 211, 238, 0.12);
+  --inset-glow: inset 0 0 12px rgba(34, 211, 238, 0.06);
+
+  /* ---- 6.3 字体与字号 ---- */
+  --font-stack: "Segoe UI", "Microsoft YaHei", sans-serif;
+  --font-mono: Consolas, "Courier New", monospace;
+  --fs-title: 26px;
+  --fs-block: 19px;
+  --fs-card: 15px;
+  --fs-body: 13.5px;
+  --fs-aux: 11.5px;
+  --fs-tag: 10.5px;
+
+  --sidebar-w: 224px;
+}
+
+/* ============ 基础 ============ */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: var(--bg-0);
+  color: var(--text-0);
+  font-family: var(--font-stack);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  overflow: hidden;             /* 硬约束：固定框架 + 局部滚动，body 不滚动 */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 全站节点文字一律不用斜体（硬约束） */
+em, i, .italic { font-style: normal; }
+
+/* ---- 6.7 背景：多层光晕 + 细网格 + 光斑 ---- */
+#bg-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 65% 50% at 20% 8%,  rgba(34, 211, 238, 0.09), transparent 60%),
+    radial-gradient(ellipse 60% 50% at 82% 18%, rgba(167, 139, 250, 0.09), transparent 60%),
+    radial-gradient(ellipse 90% 65% at 50% 112%, rgba(34, 211, 238, 0.06), transparent 65%),
+    linear-gradient(180deg, #060a14 0%, #070d1c 55%, #060a14 100%);
+}
+/* 细网格（高级科技感） */
+#bg-layer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 211, 238, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 211, 238, 0.028) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+
+.bg-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.5;
+  will-change: opacity;
+}
+.bg-blob--cyan   { width: 460px; height: 460px; left: -140px; top: -150px;
+                   background: radial-gradient(circle, rgba(34, 211, 238, 0.15), transparent 70%); }
+.bg-blob--violet { width: 500px; height: 500px; right: -170px; top: -110px;
+                   background: radial-gradient(circle, rgba(167, 139, 250, 0.13), transparent 70%); }
+
+#bg-particles { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* ---- 6.7 深色自定义滚动条 ---- */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.20);
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(34, 211, 238, 0.45);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: var(--box-glow-3);
+}
+
+/* ============ 焦点与键盘（发光 focus 环） ============ */
+:focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.22), 0 0 14px rgba(34, 211, 238, 0.35);
+  border-radius: 6px;
+}
+
+/* ============ 按钮 ============ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 7px 15px;
+  border-radius: var(--r-sm);
+  border: 1px solid var(--line-1);
+  background: var(--bg-2);
+  color: var(--text-0);
+  font-family: inherit;
+  font-size: var(--fs-body);
+  font-style: normal;
+  cursor: pointer;
+  transition: all 180ms ease-out;
+}
+.btn:hover { background: var(--bg-3); border-color: rgba(34, 211, 238, 0.45); box-shadow: var(--box-glow-2); }
+.btn:active { transform: translateY(1px); }
+
+.btn--primary {
+  background: linear-gradient(135deg, rgba(34, 211, 238, 0.15), rgba(167, 139, 250, 0.15));
+  border-color: rgba(34, 211, 238, 0.55);
+  color: #d8fbff;
+  box-shadow: var(--box-glow-2);
+}
+.btn--primary:hover { border-color: rgba(34, 211, 238, 0.85); box-shadow: var(--box-glow-1); }
+.btn--primary.is-copied {
+  color: #060a14;
+  background: linear-gradient(135deg, var(--ok), #6ee7b7);
+  border-color: var(--ok);
+  box-shadow: 0 0 4px rgba(52, 211, 153, 0.9), 0 0 14px rgba(52, 211, 153, 0.5);
+}
+.btn--primary.is-failed {
+  color: #060a14;
+  background: linear-gradient(135deg, var(--warn), #fde68a);
+  border-color: var(--warn);
+  box-shadow: 0 0 4px rgba(251, 191, 36, 0.9), 0 0 14px rgba(251, 191, 36, 0.5);
+}
+
+/* ============ 6.6 动效 ============ */
+@keyframes vwb-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes vwb-view-in  { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes vwb-slide-in-up { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes vwb-breathe { 0%, 100% { opacity: 0.75; } 50% { opacity: 1; } }
+@keyframes vwb-scan {
+  0% { background-position: -180% 0; }
+  100% { background-position: 280% 0; }
+}
+
+.view.active { animation: vwb-view-in 200ms ease-out; }
+#detail-card.show { animation: vwb-slide-in-up 240ms ease-out; }
+.detail-mask.show { animation: vwb-fade-in 200ms ease-out; }
+.breathe { animation: vwb-breathe 4s ease-in-out infinite; }
+
+.sheen { position: relative; overflow: hidden; }
+.sheen::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 45%;
+  left: 0;
+  background: linear-gradient(105deg, transparent 0%, rgba(255, 255, 255, 0.05) 45%, rgba(34, 211, 238, 0.09) 50%, rgba(255, 255, 255, 0.05) 55%, transparent 100%);
+  animation: vwb-scan 3.5s linear infinite;
+  pointer-events: none;
+}
+
+/* ============ 7 无障碍：prefers-reduced-motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .sheen::after { display: none; }
+  #bg-particles { display: none; }
+}
+
+/* 降级：filter 不支持 → 纯色 + 阴影 */
+@supports not (filter: blur(1px)) {
+  .bg-blob { filter: none; opacity: 0.22; }
+}

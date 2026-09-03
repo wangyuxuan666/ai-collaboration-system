@@ -1,0 +1,4 @@
+<view class="container">
+  <view class="title">微信小程序骨架</view>
+  <van-button type="primary" bind:click="handleLogin">一键登录</van-button>
+</view>

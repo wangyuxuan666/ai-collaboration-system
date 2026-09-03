@@ -1,0 +1,32 @@
+lockfileVersion: '9.0'
+
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
+importers:
+
+  .:
+    devDependencies:
+      '@douyin-microapp/typings':
+        specifier: ^1.0.0
+        version: 1.3.1
+      typescript:
+        specifier: ^5.4.0
+        version: 5.4.2
+
+packages:
+
+  '@douyin-microapp/typings@1.3.1':
+    resolution: {integrity: sha512-TuooIb1SYqMQ6FcC2Ux5wm5/2VH9hKO6bHIHxlKhcpW9fBp8FXHn7X/wfpVi0SaKNK15zA+B8JN2HSsaJ/wjUw==}
+
+  typescript@5.4.2:
+    resolution: {integrity: sha512-+2/g0Fds1ERlP6JsakQQDXjZdZMM+rqpamFZJEKh4kwTIn3iDkgKtby0CeNd5ATNZ4Ry1ax15TMx0W2V+miizQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
+snapshots:
+
+  '@douyin-microapp/typings@1.3.1': {}
+
+  typescript@5.4.2: {}
