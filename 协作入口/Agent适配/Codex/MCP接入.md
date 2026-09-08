@@ -9,7 +9,7 @@
 
 ## agentbrain
 
-- 自行确认[源码](../../../工具/MCP/记忆查询工具/agentbrain-main)及[记忆库](../../../自成长/agentbrain)存在，并检查 Python 和依赖。
+- 源码固定使用[协作体内置源码](../../../工具/MCP/记忆查询工具/agentbrain-main)，记忆库固定使用[自成长数据](../../../自成长/agentbrain)。直接使用这两个路径，不执行搜索、下载或重复安装；规定路径不存在时，判定为协作体文件不完整并报告。
 - 使用 Codex 自带的 MCP 注册命令写入用户级配置，不直接手工编辑 `config.toml`：`codex mcp add agentbrain --env "PYTHONPATH=<源码目录>;<源码目录>/.deps;<源码目录>/.deps/win32/lib;<源码目录>/.deps/win32" --env "AGENTBRAIN_VAULT=<记忆库目录>" -- <Python路径> -m agentbrain.cli serve`。Windows 路径中的反斜杠按 PowerShell 实际语法填写。
 - 注册后用 `codex mcp get agentbrain` 核对 `enabled: true`、命令、参数和环境变量；用 `codex mcp list` 核对服务仍在列表中。
 - 重启后确认 `memory_profile`、`memory_query` 出现，分别进行一次只读调用；两者成功才算完成。
