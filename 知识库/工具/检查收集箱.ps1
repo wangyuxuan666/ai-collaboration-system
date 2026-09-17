@@ -124,7 +124,13 @@ foreach ($area in $candidateAreas) {
 
 foreach ($message in $errors) { Write-Output "[ERROR] $message" }
 foreach ($message in $warnings) { Write-Output "[WARN] $message" }
-$manualItems = if (Test-Path -LiteralPath (Join-Path $collectionRoot '手动收集区') -PathType Container) { @(Get-ChildItem -LiteralPath (Join-Path $collectionRoot '手动收集区') -Force).Count } else { 0 }
+# 手动投放按"每个顶层文件或文件夹一个处理单元"计数；.gitkeep 等点名占位文件不是投放来源，不计入。
+$manualArea = Join-Path $collectionRoot '手动收集区'
+$manualItems = if (Test-Path -LiteralPath $manualArea -PathType Container) {
+    @(Get-ChildItem -LiteralPath $manualArea -Force | Where-Object { -not $_.Name.StartsWith('.') }).Count
+} else {
+    0
+}
 Write-Output "[SUMMARY] 收集候选=$($candidates.Count) 手动投放=$manualItems 错误=$($errors.Count) 警告=$($warnings.Count)"
 if ($errors.Count -gt 0) { exit 1 }
 exit 0
