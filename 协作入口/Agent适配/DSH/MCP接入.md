@@ -60,3 +60,24 @@
 ### 远程备选
 
 - 用 `streamable-http` transport 配置 `https://api.gitee.com/mcp`，`Authorization` 头通过 `!!js` 表达式从 `GITEE_ACCESS_TOKEN` 注入（`Authorization: !!js '`Bearer ${process.env.GITEE_ACCESS_TOKEN}`'`），不写入明文令牌；同样要求 DSH 进程环境含该变量。工具为官方全量，无法过滤。
+
+## codegraph
+
+- 用途：代码知识图谱，回答"X 在哪、谁调用谁、改它影响什么"；登记见 [工具/MCP/README.md](../../../工具/MCP/README.md)，流程用法见[代码开发流程](../../../角色/角色列表/项目治理/总控/流程/代码开发流程.md)第 10 节。
+- 类型：本地 stdio MCP（npm 全局包 `@colbymchenry/codegraph`）。
+- 命令：本机 node 可执行文件；参数：`<npm 全局目录>\@colbymchenry\codegraph\npm-shim.js`、`serve`、`--mcp`（stdio MCP 模式）。
+- 项目定位：MCP 模式按客户端的 rootUri 定位项目；目标项目需先 `codegraph init`（生成项目代码根下的 `.codegraph\`）。
+- 生效与验证：改 `cordis.patch.yml` 后热重载生效；**新开会话**确认出现 `mcp__codegraph__*` 工具，做一次只读调用（列文件结构或查询符号）才算接入完成。
+- 工具未出现时：`codegraph --version` 能运行 → 查 patch 条目与组合配置、新开会话重试；不能运行 → 说明来源与影响、取得用户同意后 `npm i -g @colbymchenry/codegraph`。
+- **验证结果（2026-09-11，某官网项目）**：新会话确认出现 `mcp__codegraph__codegraph_explore`；**调用时必须传 `projectPath` = 代码根**（即项目下真正放源码的那层目录，不是项目根）——传项目根会返回"未索引"（`.codegraph\` 在代码根下，MCP 不向上查找）。
+
+## lrnev
+
+- 用途：项目治理（Scene/Spec/ADR/Task、进度与治理欠账体检）；登记见 [工具/MCP/README.md](../../../工具/MCP/README.md)，流程用法见[代码开发流程](../../../角色/角色列表/项目治理/总控/流程/代码开发流程.md)第 10 节。
+- 类型：本地 stdio MCP（npm 全局包 `lrnev`，MCP 入口为 `lrnev-mcp`）。
+- 命令：本机 node 可执行文件；参数：`<npm 全局目录>\lrnev\bin\lrnev-mcp.mjs`。
+- 工作区：项目根需已 `lrnev init`（生成 `.lrnev\`）；工作区定位方式以首次接入验证结果为准，必要时在条目 `env` 或工具参数中显式指定项目根（不把项目路径写进通用模板）。
+- 生效与验证：热重载生效后**新开会话**确认出现 `mcp__lrnev__*` 工具，做一次只读调用（如项目状态快照）才算接入完成。
+- 工具未出现时：`lrnev --version` 能运行 → 查 patch 条目与工作区初始化、新开会话重试；不能运行 → 取得用户同意后 `npm i -g lrnev`。
+- **验证结果（2026-09-11，某官网项目）**：新会话确认出现 `mcp__lrnev__*` 共 33 个工具；但 `project_status` 返回空（scenes/specs 为空）——**MCP 实例是"一进程一工作区"**（`resolveWorkspaceRoot()`：`LRNEV_WORKSPACE` → 向上查找 `.lrnev` → cwd），DSH 全局实例的工作区不随项目会话切换。
+- **因此的使用规则**：项目治理操作**以 CLI 为准**（`lrnev -w <项目根> ...`，工作区显式指定）；**不要把项目路径写死进 profile 配置**（会让其他项目会话误用该工作区、读写错项目的治理数据）；确需用 MCP 时再设 `LRNEV_WORKSPACE`，并知悉切换项目必须同步修改该条目。
